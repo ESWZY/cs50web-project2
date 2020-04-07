@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {       //监听事件，如果有mousedown/mouseup...
 
     // state
     let draw = false;
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         svg.on('mousedown', function() {
             draw = true;
             const coords = d3.mouse(this);
-            draw_point(coords[0], coords[1], false);
+            draw_point(coords[0], coords[1], false);        //第一个点不和先前的点连线
         });
 
         svg.on('mouseup', () =>{
