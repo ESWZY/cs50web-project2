@@ -1,2 +1,5 @@
-Flask
+Flask~=1.1.2
 Flask-SocketIO
+
+Django~=3.0.5
+requests~=2.23.0
