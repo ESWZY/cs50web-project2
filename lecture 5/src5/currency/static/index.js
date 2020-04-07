@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Initialize new request
         const request = new XMLHttpRequest();
-        const currency = document.querySelector('#currency').value;
         request.open('POST', '/convert');
 
         // Callback function for when request completes
@@ -25,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Add data to send with request
         const data = new FormData();
+        const currency = document.querySelector('#currency').value;
         data.append('currency', currency);
 
         // Send request

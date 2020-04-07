@@ -2,9 +2,11 @@
 <html>
     <head>
         <script>
-
+            // 几乎全部支持 addEventListener
             document.addEventListener('DOMContentLoaded', function() {
+                // 为 button 添加属性
                 document.querySelector('button').onclick = count;
+                // also the first
             });
 
             let counter = 0;
@@ -23,6 +25,8 @@
     </head>
     <body>
         <h1 id="counter">0</h1>
+        <button>Click Here!</button>
+        <button>Click Here!</button>
         <button>Click Here!</button>
     </body>
 </html>

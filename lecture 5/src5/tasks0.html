@@ -17,7 +17,8 @@
                     document.querySelector('#task').value = '';
 
                     // Stop form from submitting
-                    return false;
+                    //如果是true，则会提交表单，导致刷新
+                    return false;       //false 阻止向其他网站提交表单
                 };
 
             });

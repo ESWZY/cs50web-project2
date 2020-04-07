@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
-votes = {"yes": 0, "no": 0, "maybe": 0}
+votes = {"yes": 0, "no": 0, "maybe": 0}       # 存储选票值
 
 
 @app.route("/")

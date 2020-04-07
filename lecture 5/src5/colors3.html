@@ -5,7 +5,8 @@
             document.addEventListener('DOMContentLoaded', () => {
 
                 // Change the color of the heading when dropdown changes
-                document.querySelector('#color-change').onchange = function() {
+                document.querySelector('#color-change').onchange = function() {      //not =>
+                    //this is the value the function is operating 需要是箭头箭头
                     document.querySelector('#hello').style.color = this.value;
                 };
 
@@ -14,8 +15,8 @@
         <title>My Website</title>
     </head>
     <body>
-        <h1 id="hello">Hello!</h1>
-        <select id="color-change">
+        <h1 id="hello" value="gray">Hello!</h1>
+        <select id="color-change" value="yellow">
             <option value="black">Black</option>
             <option value="red">Red</option>
             <option value="blue">Blue</option>

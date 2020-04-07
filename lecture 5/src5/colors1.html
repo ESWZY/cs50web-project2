@@ -5,7 +5,7 @@
             document.addEventListener('DOMContentLoaded', function() {
 
                 // Have each button change the color of the heading
-                document.querySelectorAll('.color-change').forEach(function(button) {
+                document.querySelectorAll('.color-change').forEach(function(button) {   //run a function in each element of the array
                     button.onclick = function() {
                         document.querySelector('#hello').style.color = button.dataset.color;
                     };
