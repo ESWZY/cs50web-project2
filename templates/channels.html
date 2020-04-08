@@ -13,7 +13,7 @@
     </script>
 {% endblock %}
 {% block body %}
-    <div class="list-group" style="margin-right: 60%; margin-left: 10%">
+    <div class="list-group" style="margin-right: 60%; margin-left: 10%; margin-bottom: 4%; margin-top: 1%">
         <h2><span class="bd-content-title">当前频道列表：</span></h2>
         {% for channel in channels %}
             <a href="{{ url_for("channels_view", ch=channel.index) }}"

@@ -1,62 +1,65 @@
 <!DOCTYPE html>
 <html lang="pl">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="../static/style.css">
-        <link rel="stylesheet" href="../static/footer.css">
-        <link rel="icon" href="../static/S.png" type="image/x-icon"/>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/footer.css">
+    <link rel="icon" href="../static/S.png" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <title>Simple Slack</title>
-        <script defer type="text/javascript" src="{{ url_for('static', filename='socket.io.min.js') }}"></script>
-        <script defer type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
-        <style>
-            html {
-                overflow-y: initial;
-            }
-        </style>
-        {% block scripts %}
-        {% endblock %}
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border">
-            <a class="navbar-brand" href="/">Simple Slack</a>
+    <title>Simple Slack</title>
+    <script defer type="text/javascript" src="{{ url_for('static', filename='socket.io.min.js') }}"></script>
+    <script defer type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+    <style>
+        html {
+            overflow-y: initial;
+        }
+    </style>
+    {% block scripts %}
+    {% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light border">
+    <a class="navbar-brand" href="/">Simple Slack</a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-            <div class="navbar-collapse collapse" id="navbarNavDropdown">
-                <a class="navbar-item" style="padding-left: 10px" href="{{ url_for('index') }}">
-                    <button type="button" class="btn btn-success">Home</button>
-                </a>
-                <a class="navbar-item" style="padding-left: 10px" href="{{ url_for('channels_view') }}">
-                    <button type="button" class="btn btn-success">Channel list</button>
-                </a>
-                <a class="navbar-item" style="padding-left: 10px" href="{{ url_for('create_channel') }}">
-                    <button type="button" class="btn btn-success">Create own channel</button>
-                </a>
-            </div>
+    <div class="navbar-collapse collapse" id="navbarNavDropdown">
+        <a class="navbar-item" style="padding-left: 10px" href="{{ url_for('index') }}">
+            <button type="button" class="btn btn-success">主页</button>
+        </a>
+        <a class="navbar-item" style="padding-left: 10px" href="{{ url_for('channels_view') }}">
+            <button type="button" class="btn btn-success">频道列表</button>
+        </a>
+        <a class="navbar-item" style="padding-left: 10px" href="{{ url_for('create_channel') }}">
+            <button type="button" class="btn btn-success">创建频道</button>
+        </a>
         {% if session.user %}
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link" style="padding:1px" href="#">Hello! {{ session.user }}&nbsp</a></li>
-                <li class="nav-item"><a class="nav-link" style="padding:1px" href="/logout">&nbspLog out</a></li>
+                <li class="nav-item"><a class="nav-link" style="padding:1px" href="#">你好！ {{ session.user }}&nbsp</a></li>
+                <li class="nav-item"><a class="nav-link" style="padding:1px" href="/logout">&nbsp登出</a></li>
             </ul>
         {% else %}
-            <ul class="navbar-nav ml-auto">
-                <button type="button" class="btn btn-outline"><a class="nav-link" style="padding:1px" href="/login"><b>Log in</b></a></button>
-                <button type="button" class="btn btn-success my-2 my-sm-0"><a class="nav-link" style="padding:1px" href="/register"><b>Sign up</b></a></button>
-            </ul>
-        {% endif %}
-        </nav>
+    </div>
+        <ul class="navbar-nav ml-auto">
+            <button type="button" class="btn btn-outline"><a class="nav-link" style="padding:1px" href="/"><b>登录</b></a>
+            </button>
+        </ul>
+    {% endif %}
+</nav>
 
 {% if get_flashed_messages() %}
     <div class="alert alert-info text-center" style="padding-top:12px;" role="alert">
@@ -64,60 +67,60 @@
     </div>
 {% endif %}
 
-    {% block body %}
-    {% endblock %}
-        <!--footer class="site-footer bd-footer text-muted" >
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-12 col-md-6">
+{% block body %}
+{% endblock %}
+<footer class="site-footer bd-footer text-muted">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
                 <h6>About</h6>
-                <p class="text-justify">This website provides 5000 books information for users to search, label or review. You can search book login-free. After log in, you can leave a review about certain books. If you don't want to review, you could just label the book as <i>READ</i>. Feel free to explore!</p>
-              </div>
+                <p class="text-justify">可随意加入会话频道。可查看全部频道列表、频道内在线成员等信息。可任意创立会话频道。</p>
+            </div>
 
-              <div class="col-xs-6 col-md-3">
+            <div class="col-xs-6 col-md-3">
                 <h6>Categories</h6>
                 <ul class="footer-links">
-                  <li><a href="/">Search a book</a></li>
-                  <li><a href="/search?lucky=True">Choose a book by GOD</a></li>
-                  <li><a href="/api">API</a></li>
+                    <li><a href="/">登录</a></li>
+                    <li><a href="/channels">频道列表</a></li>
+                    <li><a href="/create_channel">创建频道</a></li>
                 </ul>
-              </div>
+            </div>
 
-              <div class="col-xs-6 col-md-3">
+            <div class="col-xs-6 col-md-3">
                 <h6>Quick Links</h6>
                 <ul class="footer-links">
-                  <li><a href="mailto:wzywzy@mail.dlut.edu.cn">Contact Us</a></li>
-                  <li><a href="https://github.com/ESWZY">My Github</a></li>
-                  <li>
-                      <a href="https://github.com/ESWZY/cs50web-project1">This repo</a>
-                      <iframe style="margin-left: 2px; margin-bottom:-5px;"
-                              frameborder="0" scrolling="0" width="91px" height="20px"
-                              src="https://ghbtns.com/github-btn.html?user=ESWZY&repo=cs50web-project1&type=star&count=true">
-                      </iframe>
-                  </li>
+                    <li><a href="mailto:wzywzy@mail.dlut.edu.cn">反馈</a></li>
+                    <li><a href="https://github.com/ESWZY">我的 Github</a></li>
+                    <li>
+                        <a href="https://github.com/ESWZY/cs50web-project2">本项目</a>
+                        <iframe style="margin-left: 2px; margin-bottom:-5px;"
+                                frameborder="0" scrolling="0" width="91px" height="20px"
+                                src="https://ghbtns.com/github-btn.html?user=ESWZY&repo=cs50web-project2&type=star&count=true">
+                        </iframe>
+                    </li>
                 </ul>
-              </div>
             </div>
-            <hr>
-          </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-md-8 col-sm-6 col-xs-12">
+        </div>
+        <hr>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-6 col-xs-12">
                 <p class="copyright-text">Copyright &copy; 2020 All Rights Reserved by
-             <a href="https://github.com/ESWZY">ESWZY</a>.
+                    <a href="https://github.com/ESWZY">ESWZY</a>.
                 </p>
-              </div>
-
-              <div class="col-md-4 col-sm-6 col-xs-12">
-                <ul class="social-icons">
-                  <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                  <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                  <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
-                  <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-                </ul>
-              </div>
             </div>
-          </div>
-        </footer-->
-    </body>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <ul class="social-icons">
+                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
 </html>

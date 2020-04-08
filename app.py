@@ -48,7 +48,7 @@ def index():
         new_user = User(u_name, 0)
         # 如果当前用户列表中存在该用户，则返回原处，并提示
         if request.form.get("nickname") in [u.name for u in users]:
-            flash("The user name is already used!")
+            flash("该名称已被使用！")
             return redirect("/", "303")
         # 设置当前会话的用户信息，返回频道列表
         session["user"] = u_name
@@ -87,7 +87,7 @@ def channel_view():
         return render_template("channel.html", channel=channels[u_channel], user=u_name, prev_user="None")
     # 若尚未注册，返回、报错
     else:
-        flash("You are not logged")
+        flash("尚未登陆！")
         return redirect("/", "303")
 
 
@@ -104,10 +104,10 @@ def create_channel():
             new_channel = Channel(index=len(channels), name=new_channel_name)
             # 如果当前频道列表中存在该频道，则返回原处，并提示
             if new_channel.name in [c.name for c in channels]:
-                flash("The channel name is already used!")
+                flash("该名称已被使用！")
                 return redirect("/create_channel", "303")
             channels.append(new_channel)
-            flash("Channel created successfully")
+            flash("频道创建成功！")
             return redirect("/channels")
         # 若尚未注册，返回、报错
         else:
@@ -169,7 +169,7 @@ def new_message(data):
 
 @socketio.on('connect')
 def connect():
-    print("Client connected", request.args.get("t"))
+    print("上线", request.args.get("t"))
 
 
 @socketio.on('disconnect')
