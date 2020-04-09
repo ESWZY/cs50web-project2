@@ -45,6 +45,7 @@ def index():
     else:
         # 创建一个user类
         u_name = request.form.get("nickname")
+        print("登入请求：",u_name)
         new_user = User(u_name, 0)
         # 如果当前用户列表中存在该用户，则返回原处，并提示
         if request.form.get("nickname") in [u.name for u in users]:
@@ -117,16 +118,18 @@ def create_channel():
 
 @app.route("/logout")
 def logout():
-    try:
+    if True:
+    # try:
         del_user = User(session['user'], session["channel"])
         del_from = Channel(session["channel"], 0)
-    except KeyError:
-        return redirect("/", "303")
-    try:
+    # except KeyError:
+    #     return redirect("/", "303")
+    if True:
+    # try:
         users.remove(del_user)
         channels[channels.index(del_from)].users.remove(session['user'])
-    except ValueError:
-        pass
+    # except ValueError:
+    #     pass
     session.clear()
     print('登出！当前用户：', users)
     return redirect("/")
@@ -139,7 +142,7 @@ def select_channel(data):
     print(u_name, u_channel)
     join_room(u_channel)
     # 防止重复添加
-    if u_name not in channels[u_channel].users:
+    if True: # if u_name not in channels[u_channel].users:
         channels[u_channel].users.append(u_name)
     # 更新并广播
     nickname_array = json.dumps(channels[u_channel].users)
@@ -149,6 +152,7 @@ def select_channel(data):
 
 @socketio.on("new_message")
 def new_message(data):
+    print("|" + str(data))
     u_name = data["nickname"]
     u_channel = int(data["channel"])
     user = User(u_name, u_channel)
@@ -158,7 +162,7 @@ def new_message(data):
         text = data["message"]
         msg = Message(user, text)
         channels[u_channel].add_message(msg)
-        print("receivde msg:", text, "from", u_name)
+        print("收到消息：", text, "from", u_name)
         emit("write_message", {
             "nickname": u_name,
             "message": text

@@ -20,6 +20,22 @@
     <title>Simple Slack</title>
     <script defer type="text/javascript" src="{{ url_for('static', filename='socket.io.min.js') }}"></script>
     <script defer type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+    <script>
+        $(function () {
+            function footerPosition() {
+                $("footer").removeClass("fixed-bottom");
+                var contentHeight = document.body.scrollHeight,//网页正文全文高度
+                    winHeight = window.innerHeight;//可视窗口高度，不包括浏览器顶部工具栏
+                if (!(contentHeight > winHeight)) {
+                    //当网页正文高度小于可视窗口高度时，为footer添加类fixed-bottom
+                    $("footer").addClass("fixed-bottom");
+                }
+            }
+
+            footerPosition();
+            $(window).resize(footerPosition);
+        });
+    </script>
     <style>
         html {
             overflow-y: initial;
@@ -49,16 +65,17 @@
         </a>
         {% if session.user %}
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link" style="padding:1px" href="#">你好！ {{ session.user }}&nbsp</a></li>
+                <li class="nav-item"><a class="nav-link" style="padding:1px" href="#">你好！ {{ session.user }}&nbsp</a>
+                </li>
                 <li class="nav-item"><a class="nav-link" style="padding:1px" href="/logout">&nbsp登出</a></li>
             </ul>
         {% else %}
-    </div>
-        <ul class="navbar-nav ml-auto">
-            <button type="button" class="btn btn-outline"><a class="nav-link" style="padding:1px" href="/"><b>登录</b></a>
-            </button>
-        </ul>
-    {% endif %}
+            </div>
+            <ul class="navbar-nav ml-auto">
+                <button type="button" class="btn btn-outline"><a class="nav-link" style="padding:1px" href="/"><b>登录</b></a>
+                </button>
+            </ul>
+        {% endif %}
 </nav>
 
 {% if get_flashed_messages() %}
@@ -69,7 +86,7 @@
 
 {% block body %}
 {% endblock %}
-<footer class="site-footer bd-footer text-muted">
+<footer class="site-footer bd-footer text-muted ">
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-6">
