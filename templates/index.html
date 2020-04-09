@@ -26,22 +26,21 @@
 {% endblock %}
 {% block body %}
     <section id="login" class="hero is-info is-medium">
-        <div class="hero-body">
-            <div class="container" style="width: 50%">
-                <blockquote class="blockquote text-center" style="padding-top: 20px">
-                    <p class="mb-0">欢迎登入！</p>
-                    <p>在下方任意输入你想要的用户名！
-                        <mark>尝试一下</mark>
-                        !
-                    </p>
-                </blockquote>
-                <form method="post" class="field has-addons" id="login_form">
-                    <div class="control input-group mb-3 mx-3">
-                        <input type="text" class="input form-control " name="nickname" id="nickname"
-                               placeholder="输入用户名..." autocomplete="off">
-                        <input type="submit" class="button btn btn-outline-secondary" id="send" name="send" value="登录">
-                </form>
-            </div>
+        <div class="container" style="width: 50%">
+            <blockquote class="blockquote text-center" style="padding-top: 20px">
+                <p class="mb-0">欢迎登入！</p>
+                <p>在下方任意输入你想要的用户名！
+                    <mark>尝试一下</mark>
+                    !
+                </p>
+            </blockquote>
+            <form method="post" class="field has-addons" id="login_form">
+                <div class="control input-group mb-3 mx-3">
+                    <input type="text" class="input form-control " name="nickname" id="nickname"
+                           placeholder="输入英文用户名..." autocomplete="off">
+                    <input type="submit" class="button btn btn-outline-secondary" id="send" name="send" value="登录">
+                </div>
+            </form>
         </div>
     </section>
 {% endblock %}
