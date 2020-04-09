@@ -5,8 +5,8 @@
             let aList = document.querySelectorAll("a.channel");
             aList.forEach(element => {
                 element.addEventListener('click', () => {
-                    let link = element.getAttribute("href");
-                    localStorage.setItem("currentChanel", link[13]);
+                    let index = element.href.split('=')[1];
+                    localStorage.setItem("currentChanel", index);
                 });
             });
         });
@@ -17,7 +17,7 @@
         <h2><span class="bd-content-title">当前频道列表：</span></h2>
         {% for channel in channels %}
             <a href="{{ url_for("channels_view", ch=channel.index) }}"
-               class="list-group-item list-group-item-action list-group-item-{{ ["primary","secondary","success", "danger", "warning", "info", "light", "dark"]|random() }}">{{ channel.name }}</a>
+               class="channel list-group-item list-group-item-action list-group-item-{{ ["primary","secondary","success", "danger", "warning", "info", "light", "dark"]|random() }}">{{ channel.name }}</a>
         {% endfor %}
     </div>
 {% endblock %}

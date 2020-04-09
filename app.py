@@ -33,8 +33,6 @@ channels.append(Channel(index=7, name="第八组"))
 channels.append(Channel(index=8, name="第九组"))
 channels.append(Channel(index=9, name="第十组"))
 
-channels[0].add_message(Message(User("Admin", 0), "Test"))
-
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -45,7 +43,7 @@ def index():
     else:
         # 创建一个user类
         u_name = request.form.get("nickname")
-        print("登入请求：",u_name)
+        print("登入请求：", u_name)
         new_user = User(u_name, 0)
         # 如果当前用户列表中存在该用户，则返回原处，并提示
         if request.form.get("nickname") in [u.name for u in users]:
@@ -73,7 +71,7 @@ def channels_view():
             return render_template("channels.html", channels=channels, user=u_name)
     # 若尚未注册，返回、报错
     else:
-        flash("Not log in!")
+        flash("尚未登陆！")
         return redirect("/", "303")
 
 
@@ -112,24 +110,22 @@ def create_channel():
             return redirect("/channels")
         # 若尚未注册，返回、报错
         else:
-            flash("Not log in！")
+            flash("尚未注册!")
             return redirect("/", "303")
 
 
 @app.route("/logout")
 def logout():
-    if True:
-    # try:
+    try:
         del_user = User(session['user'], session["channel"])
         del_from = Channel(session["channel"], 0)
-    # except KeyError:
-    #     return redirect("/", "303")
-    if True:
-    # try:
+    except KeyError:
+        return redirect("/", "303")
+    try:
         users.remove(del_user)
         channels[channels.index(del_from)].users.remove(session['user'])
-    # except ValueError:
-    #     pass
+    except ValueError:
+        pass
     session.clear()
     print('登出！当前用户：', users)
     return redirect("/")
@@ -142,7 +138,7 @@ def select_channel(data):
     print(u_name, u_channel)
     join_room(u_channel)
     # 防止重复添加
-    if True: # if u_name not in channels[u_channel].users:
+    if u_name not in channels[u_channel].users:
         channels[u_channel].users.append(u_name)
     # 更新并广播
     nickname_array = json.dumps(channels[u_channel].users)
@@ -152,7 +148,6 @@ def select_channel(data):
 
 @socketio.on("new_message")
 def new_message(data):
-    print("|" + str(data))
     u_name = data["nickname"]
     u_channel = int(data["channel"])
     user = User(u_name, u_channel)
