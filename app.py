@@ -135,6 +135,7 @@ def logout():
 def select_channel(data):
     u_name = data["nickname"]
     u_channel = int(data["channel"])
+    u_name = u_name.encode("raw_unicode_escape").decode("utf-8")
     print(u_name, u_channel)
     join_room(u_channel)
     # 防止重复添加
@@ -150,11 +151,13 @@ def select_channel(data):
 def new_message(data):
     u_name = data["nickname"]
     u_channel = int(data["channel"])
+    u_name = u_name.encode("raw_unicode_escape").decode("utf-8")
     user = User(u_name, u_channel)
     print(u_name, u_channel)
     if user in users:
         join_room(u_channel)
         text = data["message"]
+        text = text.encode("raw_unicode_escape").decode("utf-8")
         msg = Message(user, text)
         channels[u_channel].add_message(msg)
         print("收到消息：", text, "from", u_name)
