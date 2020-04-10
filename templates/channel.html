@@ -32,35 +32,75 @@
                 }
             });
 
+            // 从服务器接收到消之后
             socket.on("write_message", data => {
                 let messageContainer = document.getElementById('message_list'),
                     message = document.createElement("div"),
                     receivedNickname = data.nickname,
                     receivedText = data.message,
-                    author_paragraph = document.createElement("p"),
-                    text_paragraph = document.createElement("p");
+                    author_paragraph_l = document.createElement("p"),
+                    text_paragraph = document.createElement("p"),
+                    blank_paragraph_l = document.createElement("p"),
+                    author_paragraph_r = document.createElement("p"),
+                    blank_paragraph_r = document.createElement("p");
 
-                console.log("new message: ", receivedText, "from", receivedNickname);
+                console.log("新消息：", receivedText, "来自于", receivedNickname);
 
+                message.classList.add("row");
 
-                message.classList.add("message_element");
-                author_paragraph.classList.add("has-text-weight-light", "message_author");
-                author_paragraph.innerText = receivedNickname;
-                text_paragraph.classList.add("box", "message_text");
+                author_paragraph_l.innerText = receivedNickname;
+                author_paragraph_r.innerText = receivedNickname;
+
+                text_paragraph.classList.add("message_text");
                 text_paragraph.innerText = receivedText;
+
+                div_l = document.createElement("div");
+                div_l.classList.add("col-2");
+                div_m = document.createElement("div");
+                div_m.classList.add("col-8");
+                div_r = document.createElement("div");
+                div_r.classList.add("col-2");
+                div_r.style.align = "center"
+
+                // 该条消息为当前用户所发
                 if (receivedNickname === nickname) {
-                    message.classList.add("has-text-right");
-                    text_paragraph.classList.add("current_user");
+                    text_paragraph.classList.add("to-right", "current_user");
+                    div_m.style.float = "right";
+                    var right = true;
+                } else {
+                    text_paragraph.classList.add("to-left");
+                    div_m.style.float = "left";
+                    var right = false;
                 }
 
+                // 当前消息的用户和之前的相同与否
                 if (prevNickname !== receivedNickname) {
-                    console.log("Author not reapeted", prevNickname, nickname);
-                    message.append(author_paragraph);
+                    console.log("未重复：", prevNickname, nickname);
+                    if (right === true) {
+                        div_l.append(blank_paragraph_l);
+                        div_m.append(text_paragraph);
+                        div_r.append(author_paragraph_r);
+                    } else {
+                        div_l.append(author_paragraph_l);
+                        div_m.append(text_paragraph);
+                        div_r.append(blank_paragraph_r);
+                    }
                 } else {
-                    console.log("Author reapeted", prevNickname, nickname);
-                    message.classList.add("message_author_repeated")
+                    console.log("重复：", prevNickname, nickname);
+                    if (right !== right) {
+                        div_l.append(blank_paragraph_l);
+                        div_m.append(text_paragraph);
+                        div_r.append(blank_paragraph_r);
+                    } else {
+                        div_l.append(blank_paragraph_l);
+                        div_m.append(text_paragraph);
+                        div_r.append(blank_paragraph_r);
+                    }
                 }
-                message.append(text_paragraph);
+
+                message.append(div_l)
+                message.append(div_m)
+                message.append(div_r)
                 messageContainer.append(message);
                 messageContainer.scrollIntoView({block: "end", behavior: "smooth"});
                 prevNickname = receivedNickname;
@@ -84,12 +124,12 @@
         });
     </script>
     <style>
-        .message_element {
-            margin: 0.7rem 0 1px 0;
+        .to-left {
+            float:left;
         }
 
-        .message_author_repeated {
-            margin: 1px 0;
+        .to-right {
+            float:right;
         }
 
         .message_text {
@@ -107,14 +147,9 @@
             color: white;
         }
 
-        .message_author {
-            padding: 0 0.7rem;
-            font-size: 12px;
-        }
-
         .message_view {
             overflow-y: scroll;
-            height: calc(100vh - 88px);
+            height: calc(100vh - 300px);
             padding: 0 0.7rem;
         }
 
@@ -142,38 +177,7 @@
                         </div>
                     </header>
                     <div id="message_list">
-                        {% for message in channel.messages %}
-                            {% if user == message.author.name %}
-                                {% if loop.previtem is defined and message.author.name == loop.previtem.author.name %}
-                                    <div class="message_element has-text-right message_author_repeated">
-                                {% else %}
-                                    <div class="message_element has-text-right">
-                                {% endif %}
-                            {% else %}
-                                {% if loop.previtem is defined and message.author.name == loop.previtem.author.name %}
-                                    <div class="message_element message_author_repeated">
-                                {% else %}
-                                    <div class="message_element">
-                                {% endif %}
-                            {% endif %}
-                        {% if loop.previtem is defined and message.author.name == loop.previtem.author.name %}
 
-                        {% else %}
-                            <p class="has-text-weight-light message_author">
-                                {{ message.author.name }}
-                            </p>
-                        {% endif %}
-
-                        {% if user == message.author.name %}
-                            <p class="box message_text current_user">
-                                {% else %}
-                            <p class="box message_text">
-                        {% endif %}
-
-                        {{ message.message }}
-                        </p>
-                        </div>
-                        {% endfor %}
                         </div>
                 </article>
                 <div class="container" style="margin: 10px">
