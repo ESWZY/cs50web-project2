@@ -99,3 +99,8 @@ Web Programming with Python and JavaScript
 
 ![img](/screenshot/9.png)
 
+# 部署
+
+本来是还想部署到heroku上的，但是免费的dyno好像有限制，导致发不了消息，[链接](https://simple-slack-eswzy.herokuapp.com/) 在此。如果有兴趣可以自己部署下，看下原因。
+
+但是在本地部署正常运行。
