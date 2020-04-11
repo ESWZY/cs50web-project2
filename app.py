@@ -161,10 +161,10 @@ def new_message(data):
         msg = Message(user, text)
         channels[u_channel].add_message(msg)
         print("收到消息：", text, "from", u_name)
-        emit("write_message", {
-            "nickname": u_name,
-            "message": text
-        }, room=u_channel)
+        emit("write_message", {"nickname": u_name, "message": text}, room=u_channel)
+
+        nickname_array = json.dumps(channels[session["channel"]].users)
+        emit("current_client_list", {"users": nickname_array}, room=session["channel"])
     else:
         print('未登录！')
 
@@ -176,6 +176,7 @@ def connect():
 
 @socketio.on('disconnect')
 def disconnect():
+    pass
     try:
         del_user = User(session['user'], session["channel"])
         del_from = Channel(session["channel"], 0)
@@ -189,7 +190,6 @@ def disconnect():
         print('掉线: ', session['user'])
     except KeyError:
         pass
-    session.clear()
 
 
 if __name__ == '__main__':
