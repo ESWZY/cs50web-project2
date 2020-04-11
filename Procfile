@@ -1,1 +1,1 @@
-web: gunicorn app:app --preload
+web: gunicorn -b localhost:8000 -k gevent app:app
