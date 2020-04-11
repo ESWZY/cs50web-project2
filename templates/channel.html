@@ -32,7 +32,7 @@
                 }
             });
 
-            // 从服务器接收到消之后
+            // 从服务器接收到消息之后
             socket.on("write_message", data => {
                 let messageContainer = document.getElementById('message_list'),
                     message = document.createElement("div"),
@@ -158,6 +158,19 @@
                 height: calc(100vh - 124px);
             }
         }
+
+        hr {
+            -moz-border-bottom-colors: none;
+            -moz-border-image: none;
+            -moz-border-left-colors: none;
+            -moz-border-right-colors: none;
+            -moz-border-top-colors: none;
+            border-color: #EEEEEE;
+            -moz-use-text-color: #FFFFFF;
+            border-style: solid none;
+            border-width: 1px 0;
+            margin: 18px 0;
+        }
     </style>
 {% endblock %}
 {% block body %}
@@ -177,8 +190,49 @@
                         </div>
                     </header>
                     <div id="message_list">
+                        {% for message in channel.messages %}
+                            <div class="row">
 
-                        </div>
+                                <div class="col-2">
+                                    {% if user == message.author.name %}
+                                        <p></p>
+                                    {% else %}
+                                        {% if loop.previtem is defined and message.author.name == loop.previtem.author.name %}
+                                            <p></p>
+                                        {% else %}
+                                            <p>{{ message.author.name }}</p>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-8">
+                                    {% if message.author.name == user %}
+                                        <p class="to-right message_text current_user">
+                                            {{ message.message }}
+                                        </p>
+                                    {% else %}
+                                        <p class="message_text to-left">
+                                            {{ message.message }}
+                                        </p>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-2">
+                                    {% if user != message.author.name %}
+                                        <p></p>
+                                    {% else %}
+                                        {% if loop.previtem is defined and message.author.name == loop.previtem.author.name %}
+                                            <p></p>
+                                        {% else %}
+                                            <p>{{ message.author.name }}</p>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                        <hr>
+                    </div>
                 </article>
                 <div class="container" style="margin: 10px">
                     <form id="message_form" class="field has-addons">
