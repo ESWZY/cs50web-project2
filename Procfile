@@ -1,1 +1,1 @@
-web: gunicorn -b localhost:8000 -k gevent app:app
+web: gunicorn --workers=3 app:app
